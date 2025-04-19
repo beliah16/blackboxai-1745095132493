@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Doshic - Reverse Typing App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-['Roboto']">
+  <header class="bg-blue-600 text-white p-4 text-center text-3xl font-bold select-none">
+    free-mind
+  </header>
+
+  <main class="flex-grow container mx-auto px-4 py-8 max-w-3xl flex flex-col space-y-6">
+    <label for="inputText" class="text-lg font-semibold text-gray-700">Type your text below:</label>
+    <textarea id="inputText" rows="5" placeholder="Type here..." class="w-full p-3 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+
+    <label for="outputText" class="text-lg font-semibold text-gray-700">Reversed text:</label>
+    <textarea id="outputText" rows="5" readonly class="w-full p-3 border border-gray-300 rounded-md bg-gray-100 resize-none"></textarea>
+
+    <button id="copyBtn" class="self-start bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition flex items-center space-x-2">
+      <i class="fas fa-copy"></i>
+      <span>Copy to Clipboard</span>
+    </button>
+  </main>
+
+  <footer class="bg-gray-200 text-center text-sm text-gray-600 p-4 select-none">
+    Disclaimer: This app is for educational purposes only. Developer: Kelvin Libwe.
+  </footer>
+
+  <script>
+    const inputText = document.getElementById('inputText');
+    const outputText = document.getElementById('outputText');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function reverseString(str) {
+      return str.split('').reverse().join('');
+    }
+
+    inputText.addEventListener('input', () => {
+      outputText.value = reverseString(inputText.value);
+    });
+
+    copyBtn.addEventListener('click', () => {
+      outputText.select();
+      outputText.setSelectionRange(0, 99999); // For mobile devices
+      navigator.clipboard.writeText(outputText.value).then(() => {
+        copyBtn.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i class="fas fa-copy"></i><span>Copy to Clipboard</span>';
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>
